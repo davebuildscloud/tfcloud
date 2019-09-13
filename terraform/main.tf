@@ -1,6 +1,7 @@
 data "aws_ami" "amazon_linux" {
   most_recent = true
-
+  owners = ["amazon"]
+  
   filter {
     name   = "name"
     values = ["amzn-ami-hvm-2018.03.*"]
@@ -21,7 +22,7 @@ resource "aws_subnet" "private" {
   vpc_id            = "${aws_vpc.product.id}"
   availability_zone = "${element(local.availability_zones, count.index)}"
 
-  tags {
+  tags = {
     application = "MKE_HUG"
     environment = "tfcloud-${element(local.availability_zones, count.index)}"
     role        = "Landing Zone Private Subnet"
@@ -35,7 +36,7 @@ resource "aws_subnet" "public" {
   vpc_id            = "${aws_vpc.product.id}"
   availability_zone = "${element(local.availability_zones, count.index)}"
 
-  tags {
+  tags = {
     application = "MKE_HUG"
     environment = "tfcloud-${element(local.availability_zones, count.index)}"
     role        = "Landing Zone Public Subnet"
@@ -47,7 +48,7 @@ module "autoscaled_instance" {
   application   = "MKE_HUG"
   environment   = "tfcloud-demo"
   instance_type = "t2.micro"
-  subnets       = ["${aws_subnet.private.*.id}"]
+  subnets       = "${aws_subnet.private.*.id}"
   ami_id        = "${data.aws_ami.amazon_linux.id}"
   key_name      = "ec2_demo"
   vpc_id        = "${aws_vpc.product.id}"
