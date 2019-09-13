@@ -84,7 +84,7 @@ resource "aws_autoscaling_group" "my_instance" {
     create_before_destroy = true
   }
 
-  vpc_zone_identifier = ["${var.subnets}"]
+  vpc_zone_identifier = "${var.subnets}"
 
   tag {
     key                 = "propegation"
