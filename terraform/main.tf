@@ -48,7 +48,7 @@ module "autoscaled_instance" {
   application   = "MKE_HUG"
   environment   = "tfcloud-demo"
   instance_type = "t2.micro"
-  subnets       = ["${aws_subnet.private.*.id}"]
+  subnets       = "${aws_subnet.private.*.id}"
   ami_id        = "${data.aws_ami.amazon_linux.id}"
   key_name      = "ec2_demo"
   vpc_id        = "${aws_vpc.product.id}"
