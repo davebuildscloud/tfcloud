@@ -38,7 +38,7 @@ resource "aws_security_group" "my_instance_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
+  tags = {
     Name        = "MKE_HUG_example_04_allow_22-80-443"
     application = "MKE_HUG"
     environment = "example_04_sg"
