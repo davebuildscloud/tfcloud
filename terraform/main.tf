@@ -4,6 +4,7 @@ data "aws_ami" "amazon_linux" {
   filter {
     name   = "name"
     values = ["amzn-ami-hvm-2018.03.*"]
+    owners = ["self"]
   }
 }
 
@@ -21,7 +22,7 @@ resource "aws_subnet" "private" {
   vpc_id            = "${aws_vpc.product.id}"
   availability_zone = "${element(local.availability_zones, count.index)}"
 
-  tags {
+  tags = {
     application = "MKE_HUG"
     environment = "tfcloud-${element(local.availability_zones, count.index)}"
     role        = "Landing Zone Private Subnet"
