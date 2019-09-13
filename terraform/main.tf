@@ -1,10 +1,10 @@
 data "aws_ami" "amazon_linux" {
   most_recent = true
-
+  owners = ["self"]
+  
   filter {
     name   = "name"
     values = ["amzn-ami-hvm-2018.03.*"]
-    owners = ["self"]
   }
 }
 
